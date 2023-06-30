@@ -8,6 +8,7 @@ import Wrapper from "../Helpers/Wrapper";
 const AddUser = (props) => {
   const nameInputref=useRef();
   const ageInputref=useRef();
+  const collegeInputref=useRef();
 
   const [error, setError] = useState();
 
@@ -15,10 +16,12 @@ const AddUser = (props) => {
     event.preventDefault();
     const enteredName=nameInputref.current.value;
     const enteredUserAge=ageInputref.current.value;
-    if (enteredName.trim().length === 0 || enteredUserAge.trim().length === 0) {
+    const enteredCollege=collegeInputref.current.value;
+
+    if (enteredCollege.trim().length === 0 || enteredName.trim().length === 0 || enteredUserAge.trim().length === 0) {
       setError({
         title: "Invalid input",
-        message: "Please enter a valid name and age (non-empty values)",
+        message: "Please enter a valid name, age and college (non-empty values)",
       });
       return;
     }
@@ -29,9 +32,10 @@ const AddUser = (props) => {
       });
       return;
     }
-    props.onAddUser(enteredName, enteredUserAge);
+    props.onAddUser(enteredName, enteredUserAge,enteredCollege);
     nameInputref.current.value='';
     ageInputref.current.value='';
+    collegeInputref.current.value='';
   };
 
   const errorHandler = () => {
@@ -60,6 +64,12 @@ const AddUser = (props) => {
             id="age"
             type="number"
             ref={ageInputref}
+          />
+          <label htmlFor="college">College</label>
+          <input
+            id="college"
+            type="text"
+            ref={collegeInputref}
           />
           <Button type="submit">Add User</Button>
         </form>
